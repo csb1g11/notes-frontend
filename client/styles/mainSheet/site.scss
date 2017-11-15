@@ -1,0 +1,29 @@
+h1 {
+  color: white;
+}
+
+h2 {
+  color: #03a9f4;
+}
+
+#header input {
+    color: #4696e5 !important;
+}
+
+#header {
+    background-color: #67daff;
+}
+
+@media screen and (max-width: 480px) and (orientation: portrait) {
+    input[type="submit"], input[type="reset"], input[type="button"], button, .button {
+        padding-top: 0;
+        padding-right: 1.75em;
+        padding-bottom: 0;
+        padding-left: 1.75em;
+    }
+}
+
+img {
+    width: 28px;
+    height: 28px;
+}
