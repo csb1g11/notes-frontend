@@ -1,70 +1,95 @@
 import React from 'react';
+import { InputFieldGroup } from '../common/inputFieldGroup';
 import { connect } from 'react-redux';
-import { getToken } from '../../redux/reducers/loginReducer';
+import { login } from '../../redux/actions/loginActions';
+import { validateLoginInput  } from '../common/validations';
 
-import '../../styles/mainSheet/site.scss';
-import { Field, reduxForm , SubmissionError } from 'redux-form';
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      errors: {},
+      isLoading: false
+    };
 
-
-
-const submit = ({ username='', password='' }) => {
-  let error = {};
-  let isError = false;
-  let owner = 'admin';
-
-  if (username.trim() === '') {
-    error.username = "Required";
-    isError = true
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  if (password.trim() === '') {
-    error.password = "Required";
-    isError = true
-  }  
+  isValid() {
+    const { errors, isValid } = validateLoginInput(this.state);
 
+    if (!isValid) { this.setState({ errors }); }
+    
+    return isValid;
+  }
 
-  if (isError) {
-    throw new SubmissionError(error);
-  } else {
-    /*this.setState({ errors: {}, isLoading: true });
-    this.props.login(this.state).then(
-      (res) => this.context.router.push('/'),
-      (err) => this.setState({ error: err.response.data.errors, isLoading: false })
+  onSubmit(e) {
+    e.preventDefault();
+
+    if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true });
+
+      this.props.login(this.state).then(
+        (response) => {
+          console.log(response);
+          this.context.router.push('/notes');
+        },
+        (error) => {
+          console.log(error);
+          this.setState({ errors: error, isLoading: false })
+          this.context.router.push('/login');
+        }
+      );
+    }
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  render() {
+    const { errors, username, password, isLoading } = this.state;
+
+    return (
+      <form onSubmit={this.onSubmit}>
+        { errors.form && <div className="alert alert-danger">{errors.form}</div> }
+
+        <InputFieldGroup
+          field="username"
+          label="Username"
+          value={username}
+          error={errors.username}
+          onChange={this.onChange}
+        />
+
+        <InputFieldGroup
+          field="password"
+          label="Password"
+          value={password}
+          error={errors.password}
+          onChange={this.onChange}
+          type="password"
+        />
+
+        <div className="form-group">
+          <button className="btn btn-primary btn-lg" disabled={isLoading}>
+            Login
+          </button>
+        </div>
+      </form>
     );
-    */
-    console.log("dispatching credentials from submitToServer");
-    return getToken({ username: username, password: password });
-    /*.then(token => {
-      if (data.errors) {
-        throw new SubmissionError(data.errors);
-      } else {
-        console.log(token)
-      }
-    });*/
   }
 }
 
-const renderField = ({ label, input, meta : { touched, error} }) => (
-  <div className="input-raw">
-    <label>{label}</label>
-    <br />
-    <input {...input} type="text"/>
-    {touched && error && 
-      <span className="error">{error}</span>}
-  </div>
-);
+LoginForm.propTypes = {
+  login: React.PropTypes.func.isRequired
+}
 
-const LoginFormFunc = ({ handleSubmit }) => (
-    <form onSubmit={ handleSubmit(submit) }>
-        <Field name="username" label="Username" component={renderField} type="text" />
-        <Field name="password" label="Password" component={renderField} type="text" />
-      <button type="submit">Submit</button>
-    </form>
-);
+LoginForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
-
-const LoginForm = reduxForm({
-  form: 'login'
-})(LoginFormFunc);
-
-export default LoginForm;
+export default connect(null, { login })(LoginForm);

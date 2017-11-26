@@ -3,11 +3,15 @@ h1 {
 }
 
 h2 {
-  color: #03a9f4;
+  color: #5bc0de;
+}
+
+h3 {
+  color: #5bc0de;
 }
 
 #header input {
-    color: #4696e5 !important;
+    color: #5bc0de !important;
 }
 
 #header {
@@ -26,4 +30,43 @@ h2 {
 img {
     width: 28px;
     height: 28px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.panel-heading h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    width: 75%;
+    padding-top: 8px;
+}
+
+.col-sm-6 {
+    padding-left: 0px !important;
+}
+
+.col-sm-2 {
+    padding-left: 0px !important;
+}
+
+.col-sm-4 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+#deleteButton {
+    margin-left: 15px;
+}
+
+#language {
+    font-style: italic;
+}
+
+.initiallyHidden {
+    display: none;
 }

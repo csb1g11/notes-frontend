@@ -1,57 +1,129 @@
 import React from 'react';
+import { InputFieldGroup } from '../common/inputFieldGroup';
 import { connect } from 'react-redux';
-import { getToken } from '../../redux/reducers/loginReducer';
-import '../../styles/mainSheet/site.scss';
-import { Field, reduxForm , SubmissionError } from 'redux-form';
+import { signup } from '../../redux/actions/signupActions';
+import { notifySuccess, notifyRejected } from '../../redux/actions/notificationActions';
+import { validateSignupInput } from '../common/validations';
 
+class SignupForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+      timezone: '',
+      errors: {},
+      isLoading: false,
+      invalid: false
+    }
 
-const submit = ({ username='', password='' }) => {
-  let error = {};
-  let isError = false;
-  let owner = 'admin';
-
-  if (username.trim() === '') {
-    error.username = "Required";
-    isError = true
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.checkUserExists = this.checkUserExists.bind(this);
   }
 
-  if (password.trim() === '') {
-    error.password = "Required";
-    isError = true
-  }  
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
+  isValid() {
+    const { errors, isValid } = validateSignupInput(this.state);
 
-  if (isError) {
-    throw new SubmissionError(error);
-  } else {
-    this.setState({ errors: {}, isLoading: true });
-    this.props.login(this.state).then(
-      (res) => this.context.router.push('/'),
-      (err) => this.setState({ error: err.response.data.errors, isLoading: false })
+    if (!isValid) { this.setState({ errors }); }
+
+    return isValid;
+  }
+
+  checkUserExists(e) {
+    const field = e.target.name;
+    const val = e.target.value;
+    /*if (val !== '') {
+      this.props.ifUserExists(val).then(res => {
+        let errors = this.state.errors;
+        let invalid;
+        if (res.data.user) {
+          errors[field] = 'There is user with such ' + field;
+          invalid = true;
+        } else {
+          errors[field] = '';
+          invalid = false;
+        }
+        this.setState({ errors, invalid });
+      });
+    }*/
+    return false
+  }
+  
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.userSignupRequest(this.state).then(
+        (response) => {
+          notifySuccess("All signed up!");
+          this.context.router.push('/login');
+        },
+        (error) => {
+          notifyRejected("Oh dear, we had a problem. Please refresh & try again");
+          this.setState({ errors: error.response.data, isLoading: false })
+        }
+      );
+    }
+  }
+
+  render() {
+    const { errors } = this.state;
+
+    return (
+      <form onSubmit={this.onSubmit}>
+        <InputFieldGroup
+          error={errors.username}
+          label="Username"
+          onChange={this.onChange}
+          checkUserExists={this.checkUserExists}
+          value={this.state.username}
+          field="username"
+        />
+
+        <InputFieldGroup
+          error={errors.password}
+          label="Password"
+          onChange={this.onChange}
+          value={this.state.password}
+          field="password"
+          type="password"
+        />
+
+        <InputFieldGroup
+          error={errors.passwordConfirmation}
+          label="Password Confirmation"
+          onChange={this.onChange}
+          value={this.state.passwordConfirmation}
+          field="passwordConfirmation"
+          type="password"
+        />
+
+        <div className="form-group">
+          <button disabled={this.state.isLoading || this.state.invalid} className="btn btn-primary btn-lg">
+            Sign up
+          </button>
+        </div>
+      </form>
     );
   }
 }
 
-const renderField = ({ label, input, meta : { touched, error} }) => (
-  <div className="input-raw">
-    <label>{label}</label>
-    <br />
-    <input {...input} type="text"/>
-    {touched && error && 
-      <span className="error">{error}</span>}
-  </div>
-);
+SignupForm.propTypes = {
+  userSignupRequest: React.PropTypes.func.isRequired,
+  ifUserExists: React.PropTypes.func.isRequired,
+}
 
-const SignupFormFunc = ({ handleSubmit }) => (
-    <form onSubmit={ handleSubmit(submit) }>
-        <Field name="username" label="Username" component={renderField} type="text" />
-        <Field name="password" label="Password" component={renderField} type="text" />
-      <button type="submit">Submit</button>
-    </form>
-);
+SignupForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
-const SignupForm = reduxForm({
-  form: 'Signup'
-})(SignupFormFunc)
-
-export default SignupForm;
+export default connect(null, { notifySuccess, notifyRejected })(SignupForm);

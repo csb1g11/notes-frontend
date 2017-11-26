@@ -1,104 +1,91 @@
 import axios from "axios";
+import setAuthorizationToken from '../../utils/setAuthorizationToken';
+import isEmpty from 'lodash/isEmpty';
+import { FETCH_NOTES, FETCH_NOTES_REJECTED, FETCH_NOTES_FULFILLED, ADD_NOTE, 
+  DELETE_NOTE, UPDATE_NOTE, SEARCH_NOTES, CANCEL_UPDATE, SET_UPDATE_NOTE } from '../actions/types';
 
-/////////////////CONSTANTS/////////////////////
-const GET_ALL_NOTES = "GET_ALL_NOTES";
-const POST_NOTE = "POST_NOTE";
-const CHANGE_STATUS = "CHANGE_STATUS";
-const DELETE_NOTE = "DELETE_NOTE";
-
-/////////////////ACTIONS//////////////
-const getNotes = (notes) => ({type: GET_ALL_NOTES, notes});
-const addNote = (note) => ({type: POST_NOTE, note});
-const changeStatus = (note) => ({type: CHANGE_STATUS, note});
-/////////////////REDUCER/////////////////////
-//initiate your starting state
 let initial = {
-  notes: []
+  language: '',
+  notes: [],
+  searchTerm: '',
+  fetching: false,
+  fetched: false,
+  error: null
 };
+
 const noteReducer = (state = initial, action) => {
   switch (action.type) {
-    case GET_ALL_NOTES:
-      return Object.assign({}, state, {notes: action.notes.objects});
-    case POST_NOTE:
-      let updatedNotes = [action.note].concat(state.notes);
-      return Object.assign({}, state, {notes: updatedNotes});
-    case CHANGE_STATUS:
-      let newArr = state.notes.map((note) => {
-        if(note.slug === action.note.slug) note.metafields[0].value = !note.metafields[0].value;
-        return note;
-      });
-      return Object.assign({}, state, {notes: newArr});
-    case DELETE_NOTE:
-      let arr = state.notes.filter((note) => {
-        return !(note.slug === action.slug);
-      });
-      return Object.assign({}, state, {notes: arr});
-    default:
-      return state;
-  }
-};
-export default noteReducer;
+      case FETCH_NOTES: {
+        return { ...state, fetching: true }
+      }
+      case FETCH_NOTES_REJECTED: {
+        return { ...state, fetching: false, error: action.payload}
+      }
+      case FETCH_NOTES_FULFILLED: {
+        const newNotes = action.payload
 
-/////////////// ACTION DISPATCHER FUNCTIONS///////////////////
-export const getAllNotes = () => dispatch => {
-  axios.get(`https://api.cosmicjs.com/v1/your-bucket-slug-name/object-type/notes`)
-    .then((response) => {
-      return response.data;
-    })
-    .then((notes) => {
-      dispatch(getNotes(notes))
-    })
-    .catch((err) => {
-      console.error.bind(err);
-    })
-};
-export const postNewNote = (note) => dispatch => {
-  dispatch(addNote({phrase: note, metafields: [{value: false}], slug: formatSlug(note)}));
-  axios.post(`https://api.cosmicjs.com/v1/your-bucket-slug-name/add-object`, {type_slug: "notes", phrase: note, content: "New Note",
-    metafields: [
-      {
-        phrase: "Is Complete",
-        key: "is_complete",
-        value: false,
-        type: "text"
+        const newState = {
+          ...state,
+          fetching: false,
+          fetched: true,
+          notes: newNotes
+        };
+
+        return newState;
       }
-    ]})
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((err) => {
-      console.error.bind(err);
-    })
-};
-export const putChangeStatus = (note, bool) => (dispatch) => {
-  dispatch(changeStatus(note));
-  axios.put(`https://api.cosmicjs.com/v1/your-bucket-slug-name/edit-object`, {slug: note.slug,
-    metafields: [
-      {
-        phrase: "Is Complete",
-        key: "is_complete",
-        value: !bool,
-        type: "text"
+      case ADD_NOTE: {
+        return {
+          ...state,
+          notes: [...state.notes, action.payload],
+        }
       }
-    ]})
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((err) => {
-      console.error.bind(err);
-    })
+      case UPDATE_NOTE: {
+        const { url } = action.payload
+        const newNotes = [...state.notes]
+        const noteToUpdate = newNotes.findIndex(note => note.url === url)
+        newNotes[noteToUpdate] = { ...action.payload, update: true};
+
+        return {
+          ...state,
+          notes: newNotes,
+        }
+      }
+      case SET_UPDATE_NOTE: {
+        const updateStatus = action.payload
+
+        return {
+          ...state,
+          update: updateStatus,
+        }
+      }
+      case DELETE_NOTE: {
+        return {
+          ...state,
+          notes: state.notes.filter(note => note.url !== action.payload.url),
+        }
+      }
+      case SEARCH_NOTES: {
+        const { payload } = action;
+        return {...state, 
+          searchTerm: payload, 
+        };
+      }
+      case CANCEL_UPDATE: {
+        const { url } = action.payload
+        const newNotes = [...state.notes]
+        const noteToUpdate = newNotes.findIndex(note => note.url === url)
+        newNotes[noteToUpdate] = { ...action.payload, update: false};
+
+        return {
+          ...state,
+          notes: newNotes,
+        }
+      }
+      default:
+        return state;
+  }
+
+  return state;
 };
-export const deleteNote = (slug) => (dispatch) => {
-  dispatch(noteDelete(slug));
-  axios.delete(`https://api.cosmicjs.com/v1/your-bucket-slug-name/${slug}`)
-    .then((response) => {
-    console.log(response.data)
-    })
-    .catch((err) => {
-      console.error.bind(err);
-    })
-};
-const formatSlug = (phrase) => {
-  let lower = phrase.toLowerCase();
-  return lower.split(" ").join("-");
-};
+
+export default noteReducer;

@@ -1,6 +1,5 @@
 import React from 'react';
-import Navigation from './navigation';
-import Home from './home';
+import Navigation from './common/navigation';
 
 class App extends React.Component {
   render() {

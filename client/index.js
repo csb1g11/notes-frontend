@@ -8,6 +8,9 @@ import rootReducer from './redux/reducers/index';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import jwtDecode from 'jwt-decode';
 import { setCurrentUser } from './redux/reducers/loginReducer';
+import axios from 'axios';
+import "./styles/mainSheet/site.scss";
+
 
 import routes from './redux/routes';
 
@@ -21,7 +24,7 @@ const store = createStore(
 
 if (localStorage.jwtToken) {
   setAuthorizationToken(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+  store.dispatch(setCurrentUser({...jwtDecode(localStorage.jwtToken), token: localStorage.jwtToken}));
 }
 
 render(

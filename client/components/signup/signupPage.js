@@ -1,7 +1,7 @@
 import React from 'react';
 import SignupForm from './signupForm';
 import { connect } from 'react-redux';
-import { userSignupRequest, ifUserExists } from '../../redux/reducers/loginReducer';
+import { userSignupRequest, ifUserExists } from '../../redux/actions/signupActions';
 
 class SignupPage extends React.Component {
 
