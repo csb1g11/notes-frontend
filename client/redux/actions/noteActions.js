@@ -15,7 +15,6 @@ export const searchNotes = (searchTerm) => { return {type: SEARCH_NOTES, payload
 
 export const cancelUpdate = (note) => { return {type: CANCEL_UPDATE, payload: note}};
 
-
 export function fetchNotes(user) {
   return dispatch => {
     dispatch({type: FETCH_NOTES_REQUEST, user});
@@ -30,7 +29,7 @@ export function fetchNotes(user) {
   }
 }
 
-export function addNote({ phrase, context, definition, language, website}) {
+export function addNote({ phrase, context, definition, language, website }, user) {
   return dispatch => {
     dispatch({type: ADD_NOTE_REQUEST, phrase});
 
@@ -41,6 +40,7 @@ export function addNote({ phrase, context, definition, language, website}) {
       data: JSON.stringify({ phrase, context, definition, language, website }) })
     .then(res => {
       dispatch(notifySuccess("All saved - safe & sound!"));
+      dispatch(fetchNotes(user));
       return res;
     })
     .catch(error => {

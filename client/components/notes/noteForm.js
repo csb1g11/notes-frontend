@@ -122,4 +122,10 @@ NoteForm.propTypes = {
   addNote: React.PropTypes.func.isRequired
 }
 
-export default connect(null, { addNote })(NoteForm);
+function mapStateToProps(state) {
+  return {
+    user: state.login.user
+  };
+}
+
+export default connect(mapStateToProps, { addNote })(NoteForm);

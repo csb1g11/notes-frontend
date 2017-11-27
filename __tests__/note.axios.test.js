@@ -61,19 +61,23 @@ describe('note action tests', () => {
 
   it(`should create action NOTIFY_SUCCESS after add note request`, () => {
   	let note = { 'phrase' : 'hola', 'definition': 'hi', 'context': '', 'language': 'en'};
+    let user = { 'username': 'user1' };
     moxios.wait(() => {
       let request = moxios.requests.mostRecent();
       request.respondWith({
         status: 201,
-        response: { note },
+        response: { note, user },
       });
     });
+
     const expectedActions = [
     	{ type: types.ADD_NOTE_REQUEST, phrase: 'hola' },
     	{ type: types.SUCCESSFUL_ACTION, text: "All saved - safe & sound!" },
+      { type: types.FETCH_NOTES_REQUEST, user }
     ];
+    
     const store = mockStore({ auth: {} });
-    return store.dispatch(noteActions.addNote(note))
+    return store.dispatch(noteActions.addNote(note, user))
     .then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
