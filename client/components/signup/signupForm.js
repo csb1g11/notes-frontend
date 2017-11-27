@@ -21,7 +21,6 @@ class SignupForm extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.checkUserExists = this.checkUserExists.bind(this);
   }
 
   onChange(e) {
@@ -35,27 +34,6 @@ class SignupForm extends React.Component {
 
     return isValid;
   }
-
-  checkUserExists(e) {
-    const field = e.target.name;
-    const val = e.target.value;
-    /*if (val !== '') {
-      this.props.ifUserExists(val).then(res => {
-        let errors = this.state.errors;
-        let invalid;
-        if (res.data.user) {
-          errors[field] = 'There is user with such ' + field;
-          invalid = true;
-        } else {
-          errors[field] = '';
-          invalid = false;
-        }
-        this.setState({ errors, invalid });
-      });
-    }*/
-    return false
-  }
-  
 
   onSubmit(e) {
     e.preventDefault();
@@ -84,7 +62,6 @@ class SignupForm extends React.Component {
           error={errors.username}
           label="Username"
           onChange={this.onChange}
-          checkUserExists={this.checkUserExists}
           value={this.state.username}
           field="username"
         />
@@ -119,7 +96,6 @@ class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
-  ifUserExists: React.PropTypes.func.isRequired,
 }
 
 SignupForm.contextTypes = {

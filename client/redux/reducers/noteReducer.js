@@ -1,7 +1,7 @@
 import axios from "axios";
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import isEmpty from 'lodash/isEmpty';
-import { FETCH_NOTES, FETCH_NOTES_REJECTED, FETCH_NOTES_FULFILLED, ADD_NOTE, 
+import { FETCH_NOTES_REQUEST, FETCH_NOTES_REJECTED, FETCH_NOTES_FULFILLED, ADD_NOTE, 
   DELETE_NOTE, UPDATE_NOTE, SEARCH_NOTES, CANCEL_UPDATE, SET_UPDATE_NOTE } from '../actions/types';
 
 let initial = {
@@ -15,8 +15,10 @@ let initial = {
 
 const noteReducer = (state = initial, action) => {
   switch (action.type) {
-      case FETCH_NOTES: {
-        return { ...state, fetching: true }
+      case FETCH_NOTES_REQUEST: {
+        return { ...state, 
+          fetching: true 
+        };
       }
       case FETCH_NOTES_REJECTED: {
         return { ...state, fetching: false, error: action.payload}
@@ -65,9 +67,8 @@ const noteReducer = (state = initial, action) => {
         }
       }
       case SEARCH_NOTES: {
-        const { payload } = action;
         return {...state, 
-          searchTerm: payload, 
+          searchTerm: action.payload, 
         };
       }
       case CANCEL_UPDATE: {
@@ -79,6 +80,7 @@ const noteReducer = (state = initial, action) => {
         return {
           ...state,
           notes: newNotes,
+          update: false
         }
       }
       default:

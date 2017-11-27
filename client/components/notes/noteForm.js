@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNote, getWebsiteText } from '../../redux/actions/noteActions';
+import { addNote } from '../../redux/actions/noteActions';
 import { InputFieldGroup, SelectFieldGroup } from '../common/inputFieldGroup';
 import { validateNoteInput } from '../common/validations'
 import { langOptions, langMap } from '../common/languages';
@@ -26,13 +26,10 @@ class NoteForm extends React.Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    if (e.target.name === 'website' && this.validUrl(e.target.value)){
-        this.props.getWebsiteText(e.target.value);
-    }
   }
 
   validUrl(str) {
-    var pattern = new RegExp('www.?.+','i'); //http?
+    var pattern = new RegExp('www.?.+','i');
 
     return (pattern.test(str))
   }
@@ -50,11 +47,9 @@ class NoteForm extends React.Component {
     if (this.isValid()){
       this.props.addNote(this.state).then(
         (response) => {
-          console.log(response);
           this.setState({ errors: {}, isLoading: false, phrase: '', definition: '', context: '', language: '', website: '' })
         },
         (error) => {
-          console.log(error);
           this.setState({ errors: error, isLoading: false })
         }
       );
@@ -124,8 +119,7 @@ class NoteForm extends React.Component {
 }
 
 NoteForm.propTypes = {
-  addNote: React.PropTypes.func.isRequired,
-  getWebsiteText: React.PropTypes.func.isRequired
+  addNote: React.PropTypes.func.isRequired
 }
 
-export default connect(null, { addNote, getWebsiteText })(NoteForm);
+export default connect(null, { addNote })(NoteForm);

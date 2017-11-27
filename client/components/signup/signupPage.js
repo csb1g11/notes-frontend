@@ -1,7 +1,7 @@
 import React from 'react';
 import SignupForm from './signupForm';
 import { connect } from 'react-redux';
-import { userSignupRequest, ifUserExists } from '../../redux/actions/signupActions';
+import { userSignupRequest } from '../../redux/actions/signupActions';
 
 class SignupPage extends React.Component {
 
@@ -10,13 +10,12 @@ class SignupPage extends React.Component {
   }
 
   render() {
-    const { userSignupRequest, ifUserExists } = this.props;
+    const { userSignupRequest } = this.props;
     return (
       <div className="row">
       	<h2>Sign up</h2>
         <div className="col-md-4 col-md-offset-4">
           <SignupForm
-            ifUserExists={ifUserExists}
             userSignupRequest={userSignupRequest}/>
         </div>
       </div>
@@ -26,8 +25,7 @@ class SignupPage extends React.Component {
 
 SignupPage.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
-  ifUserExists: React.PropTypes.func.isRequired
 }
 
 
-export default connect(null, { userSignupRequest, ifUserExists })(SignupPage);
+export default connect(null, { userSignupRequest })(SignupPage);

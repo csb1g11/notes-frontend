@@ -1,22 +1,31 @@
 import axios from "axios";
 import isEmpty from 'lodash/isEmpty';
-import { CREATE_USER } from '../actions/signupActions';
+import { SIGNUP_REQUEST, CREATE_USER_REQUEST } from '../actions/types';
 
-/////////////////ACTIONS//////////////
-export const createUser = (user) => ({type: CREATE_USER, user});
-
-/////////////////REDUCER/////////////////////
 let initial = {
   user: {},
-  auth: {}
+  auth: {},
+  isFetching: false,
+  isCreating: false
 };
 
 const signupReducer = (state = initial, action) => {
-  switch (action.type) {
-    case CREATE_USER:
-      return { isAuthenticated: !isEmpty(action.user), user: action.user };
-    default:
-      return state;
-  }
+	let type = action.type || '';
+
+	switch (type) {
+		case SIGNUP_REQUEST:
+	     	return { ...state, 
+	     		isAuthenticated: !isEmpty(action.user), 
+	     		user: action.user,
+	     		isFetching: true };
+	  	case CREATE_USER_REQUEST:
+	     	return { ...state, 
+	     		user: action.user, 
+	     		isCreating: true, 
+	     		isFetching: false };
+	    default:
+	     	return state;
+	}
 };
+
 export default signupReducer;

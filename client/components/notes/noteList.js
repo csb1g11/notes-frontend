@@ -81,8 +81,6 @@ class NoteList extends Component {
 
     if (notes !== undefined) {
 
-      console.log("notes", notes);
-
       if (selectedLanguage != '' && selectedLanguage != 'All') {
         filteredNotes = notes.filter((val) => val.language == selectedLanguage);
       } else {

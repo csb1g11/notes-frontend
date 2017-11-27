@@ -17,15 +17,6 @@ describe('actions creators', () => {
     expect(loginActions.setCurrentUser(user)).toEqual(expectedAction)
   })
 
-  it('should create an action to set the load notes', () => {
-    const user = {}
-    const expectedAction = {
-      type: types.LOAD_NOTES,
-      user
-    }
-    expect(loginActions.loadNotes(user)).toEqual(expectedAction)
-  })
-
   it('should create an action to update a note', () => {
     const note = {
     	'phrase': 'hola',

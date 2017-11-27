@@ -23,7 +23,6 @@ export function createNewUser(credentials) {
   };
 }
 
-
 export const userSignupRequest = (credentials) => {
   return dispatch => {
     dispatch({type: SIGNUP_REQUEST, user : credentials });
@@ -39,11 +38,5 @@ export const userSignupRequest = (credentials) => {
           dispatch(notifyRejected("There was an error, please try again"))
         }
       });
-  }
-}
-
-export const ifUserExists = (identifier) => {
-  return dispatch => {
-    return axios.get(config.apiRoot + `/users/${identifier}`);
   }
 }

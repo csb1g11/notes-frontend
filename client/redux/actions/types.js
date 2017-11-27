@@ -25,7 +25,6 @@ export const DELETE_NOTE = "DELETE_NOTE";
 
 export const SEARCH_NOTES = "SEARCH_NOTES";
 export const CANCEL_UPDATE = "CANCEL_UPDATE";
-export const LOAD_NOTES = "LOAD_NOTES";
 
 export const SUCCESSFUL_ACTION = "SUCCESSFUL_ACTION";
 export const REJECTED_ACTION = "REJECTED_ACTION";

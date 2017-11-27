@@ -1,20 +1,13 @@
 import axios from "axios";
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import jwtDecode from 'jwt-decode';
-import { SET_CURRENT_USER, LOAD_NOTES, SUCCESSFUL_ACTION, GET_TOKEN_REQUEST, LOGIN_REQUEST } from './types';
+import { SET_CURRENT_USER, SUCCESSFUL_ACTION, GET_TOKEN_REQUEST, LOGIN_REQUEST } from './types';
 import { notifySuccess, notifyRejected } from './notificationActions';
 import config from 'config';
 
 export function setCurrentUser(user) {
   return {
     type: SET_CURRENT_USER,
-    user
-  };
-}
-
-export function loadNotes(user) {
-  return {
-    type: LOAD_NOTES,
     user
   };
 }

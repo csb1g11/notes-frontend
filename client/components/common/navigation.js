@@ -22,8 +22,6 @@ class Navigation extends React.Component {
   	let text = this.props.text;
   	let type = this.props.type;
   	if (!text) return;
-    console.log("type", type);
-    console.log("text", text);
 
   	if((!prevState) || (text != prevState.text)) {
   		if (!type) {
