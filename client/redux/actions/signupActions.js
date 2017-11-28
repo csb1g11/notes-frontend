@@ -30,6 +30,7 @@ export const userSignupRequest = (credentials) => {
     return axios
       .post(config.apiRoot +'/users/', credentials)
       .then(response => {
+        dispatch(notifySuccess("All signed up!"))
         return response.data;
       }).catch((error) => {
         if (error.response.status === 400){

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputFieldGroup } from '../common/inputFieldGroup';
+import { InputFieldGroup } from '../common/fieldGroups';
 import { connect } from 'react-redux';
 import { login } from '../../redux/actions/loginActions';
 import { validateLoginInput  } from '../common/validations';

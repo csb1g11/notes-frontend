@@ -92,7 +92,8 @@ describe('signup action tests', () => {
       });
     });
     const expectedActions = [
-      { type: types.SIGNUP_REQUEST, user }
+      { type: types.SIGNUP_REQUEST, user },
+      { type: types.SUCCESSFUL_ACTION, text: "All signed up!" }
     ];
     const store = mockStore({ auth: {} });
     return store.dispatch(signupActions.userSignupRequest(user))

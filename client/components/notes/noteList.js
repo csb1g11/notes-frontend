@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { fetchNotes, deleteNote, updateNote, saveUpdatedNote, cancelUpdate } from '../../redux/actions/noteActions';
-import { InputFieldGroup, SelectFieldGroup } from '../common/inputFieldGroup';
+import { InputFieldGroup, SelectFieldGroup } from '../common/fieldGroups';
 import SearchBar from '../searchBar';
 import NoteForm from './noteForm';
 import { langOptions, langMap } from '../common/languages';
+import { validateNoteInput } from '../common/validations'
 
 class NoteList extends Component {
   constructor(props) {
@@ -40,7 +41,8 @@ class NoteList extends Component {
       website: note.website,
       language: note.language,
       url: note.url,
-      updateInProgress: true 
+      updateInProgress: true,
+      errors: {}
     });
   }
 
@@ -53,10 +55,28 @@ class NoteList extends Component {
     this.props.dispatch(fetchNotes(this.props.user));
   }
 
+  isValid() {
+    const { errors, isValid } = validateNoteInput(this.state);
+
+    if (!isValid) { this.setState({ errors }); }
+
+    return isValid;
+  }
+
   onSubmit(e) {
     e.preventDefault();
-    this.setState({ updateInProgress: false });
-    this.props.dispatch(saveUpdatedNote(this.state, this.props.user));
+
+    if (this.isValid()){
+      this.props.dispatch(saveUpdatedNote(this.state, this.props.user)).then(
+        (response) => {
+          this.setState({ updateInProgress: false, errors: {}, isLoading: false, phrase: '', definition: '', context: '', language: '', website: '' })
+        },
+        (error) => {
+          console.log(error);
+          this.setState({ errors: error, isLoading: false })
+        }
+      );
+    }
   }
 
   onLanguageChange(e) {
@@ -73,6 +93,8 @@ class NoteList extends Component {
 
   render() {
     const { notes, searchTerm, user } = this.props;
+    const { errors } = this.state;
+
     let filteredNotes = [];
     let selectedLanguage = this.state.selectedLanguage || '';
     let mappedNotes = "Add some notes to see them here!";
@@ -131,6 +153,7 @@ class NoteList extends Component {
                       label="Definition"
                       name="definition"
                       value={this.state.definition}
+                      error={errors.definition}
                       onChange={this.onChange}
                     />
 
@@ -139,6 +162,7 @@ class NoteList extends Component {
                       label="Context"
                       name="context"
                       value={this.state.context}
+                      error={errors.context}
                       onChange={this.onChange}
                     />
 
@@ -147,6 +171,7 @@ class NoteList extends Component {
                       label="Website Link"
                       name="website"
                       value={this.state.website}
+                      error={errors.website}
                       onChange={this.onChange}
                     />
 
@@ -207,7 +232,6 @@ class NoteList extends Component {
           </div>
   }
 };
-
 
 function mapStateToProps(state) {
   return {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addNote } from '../../redux/actions/noteActions';
-import { InputFieldGroup, SelectFieldGroup } from '../common/inputFieldGroup';
+import { InputFieldGroup, SelectFieldGroup } from '../common/fieldGroups';
 import { validateNoteInput } from '../common/validations'
 import { langOptions, langMap } from '../common/languages';
 

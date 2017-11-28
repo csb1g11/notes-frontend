@@ -36,5 +36,5 @@ export default function(ComposedComponent) {
     };
   }
 
-  return connect(mapStateToProps, { })(Authenticate);
+  return connect(mapStateToProps, {})(Authenticate);
 }
