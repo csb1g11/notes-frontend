@@ -44,7 +44,7 @@ yarn start
 
 #### Features
 - Expand the search & filter functionality to allow tagging
-- Move the filter logic to the backend: this would involve adding a parameter to the existing notes endpoint specifying the language, and creating another endpoint to list the users available languages for the filter functionality.
+- Move the filter logic to the backend: this would involve making user of a parameter on the existing notes endpoint specifying the language, and creating another endpoint to list the users available languages for the filter functionality.
 - Flashcards: now that the structure of a note has been displayed, it would be quite simple to add flashcards for testing your memory. Another extension would be getting the user to highlight the phrase which correlates to their definition from the context they have provided.
 - NLP: tokenizing the context and phrase and providing a tag for what type of word is being entered would be useful, ie if there is a verb in the past participle.
 
