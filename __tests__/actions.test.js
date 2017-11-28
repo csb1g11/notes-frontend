@@ -2,18 +2,20 @@ import * as loginActions from '../client/redux/actions/loginActions';
 import * as noteActions from '../client/redux/actions/noteActions';
 import * as notificationActions from '../client/redux/actions/notificationActions';
 import * as signupActions from '../client/redux/actions/signupActions';
-
 import * as types from '../client/redux/actions/types';
+
 jest.mock('config');
 jest.mock('axios');
 
 describe('actions creators', () => {
   it('should create an action to set the current user', () => {
     const user = {}
+
     const expectedAction = {
       type: types.SET_CURRENT_USER,
       user
     }
+
     expect(loginActions.setCurrentUser(user)).toEqual(expectedAction)
   })
 
@@ -23,10 +25,12 @@ describe('actions creators', () => {
     	'definition': 'hi',
     	'context': 'hola mi amiga'
     }
+
     const expectedAction = {
       type: types.UPDATE_NOTE,
       payload: note
     }
+
     expect(noteActions.updateNote(note)).toEqual(expectedAction)
   })
 
@@ -36,10 +40,12 @@ describe('actions creators', () => {
     	'definition': 'hi',
     	'context': 'hola mi neuva amiga'
     }
+
     const expectedAction = {
       type: types.ADD_NOTE,
       payload: note
     }
+
     expect(noteActions.createNote(note)).toEqual(expectedAction)
   })
 
@@ -49,10 +55,12 @@ describe('actions creators', () => {
       'definition': 'hi',
       'context': 'hola mi neuva amiga'
     }
+
     const expectedAction = {
       type: types.SET_UPDATE_NOTE,
       payload: note
     }
+
     expect(noteActions.setUpdate(note)).toEqual(expectedAction)
   });
 
@@ -63,6 +71,7 @@ describe('actions creators', () => {
       type: types.SEARCH_NOTES,
       payload: searchTerm
     }
+
     expect(noteActions.searchNotes(searchTerm)).toEqual(expectedAction)
   });
 
@@ -75,6 +84,7 @@ describe('actions creators', () => {
       type: types.CANCEL_UPDATE,
       payload: note
     }
+
     expect(noteActions.cancelUpdate(note)).toEqual(expectedAction)
   });
 
@@ -85,6 +95,7 @@ describe('actions creators', () => {
       type: types.SUCCESSFUL_ACTION,
       text: text
     }
+
     expect(notificationActions.notifySuccess(text)).toEqual(expectedAction)
   });
 
@@ -95,6 +106,7 @@ describe('actions creators', () => {
       type: types.REJECTED_ACTION,
       text: text
     }
+
     expect(notificationActions.notifyRejected(text)).toEqual(expectedAction)
   });
 
@@ -105,6 +117,7 @@ describe('actions creators', () => {
       type: types.INFO_ACTION,
       text: text
     }
+    
     expect(notificationActions.notifyInfo(text)).toEqual(expectedAction)
   });
 })

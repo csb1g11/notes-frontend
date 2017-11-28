@@ -1,5 +1,6 @@
-import loginReducer from '../client/redux/reducers/loginReducer'
-import { SET_CURRENT_USER } from '../client/redux/actions/types'
+import loginReducer from '../client/redux/reducers/loginReducer';
+import { SET_CURRENT_USER } from '../client/redux/actions/types';
+
 jest.mock('config');
 
 describe('login reducer', () => {

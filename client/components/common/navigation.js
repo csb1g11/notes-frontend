@@ -17,7 +17,6 @@ class Navigation extends React.Component {
     this.props.logout();
   }
 
-
   componentDidUpdate(prevState, prevProps){
   	let text = this.props.text;
   	let type = this.props.type;
@@ -77,7 +76,6 @@ class Navigation extends React.Component {
     );
   }
 }
-
 
 Navigation.propTypes = {
   auth: React.PropTypes.object.isRequired,

@@ -34,21 +34,13 @@ module.exports = {
         plugins: ["transform-class-properties", "transform-es2015-modules-commonjs"]
       }
     },
-      {
-        test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
+    {
+      test: /\.scss$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        'sass-loader'
         ]
-      }]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NOTE_BUCKET': JSON.stringify(process.env.NOTE_BUCKET),
-      'process.env.NOTE_READ_KEY': JSON.stringify(process.env.NOTE_READ_KEY),
-      'process.env.NOTE_WRITE_KEY': JSON.stringify(process.env.NOTE_WRITE_KEY)
-    }),
-    new LiveReloadPlugin({appendScriptTag: true})
-  ]
+    }]
+  }
 };

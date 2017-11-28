@@ -1,5 +1,6 @@
-import noteReducer from '../client/redux/reducers/noteReducer'
-import * as types from '../client/redux/actions/types'
+import noteReducer from '../client/redux/reducers/noteReducer';
+import * as types from '../client/redux/actions/types';
+
 jest.mock('config');
 
 describe('login reducer', () => {
@@ -42,9 +43,15 @@ describe('login reducer', () => {
   })
 
   it('should handle FETCH_NOTES_FULFILLED', () => {
-    let notes = [{'phrase': 'hola', 'definition': 'hi', 'language' : 'es'},
-    {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es'},
-    {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es'}];
+    let notes = [ { 'phrase': 'hola', 
+                    'definition': 'hi', 
+                    'language' : 'es'},
+                  { 'phrase': 'amigo', 
+                    'definition': 'friend', 
+                    'language' : 'es'},
+                  {'phrase': 'enemigo', 
+                   'definition': 'enemy', 
+                   'language' : 'es' }];
 
 
     expect(noteReducer([], {
@@ -61,10 +68,18 @@ describe('login reducer', () => {
   })
 
   it('should handle ADD_NOTE', () => {
-    let notes = [ {'phrase': 'hola', 'definition': 'hi', 'language' : 'es'},
-                  {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es'},
-                  {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es'}];
-    let newNote = {'phrase': 'silla', 'definition': 'chair', 'language' : 'es'}
+    let notes = [ { 'phrase': 'hola', 
+                    'definition': 'hi', 
+                    'language' : 'es'},
+                  { 'phrase': 'amigo', 
+                    'definition': 'friend', 
+                    'language' : 'es'},
+                  { 'phrase': 'enemigo', 
+                  'definition': 'enemy', 
+                  'language' : 'es' }];
+    let newNote = { 'phrase': 'silla', 
+                    'definition': 'chair', 
+                    'language' : 'es' };
     let newNotes = [...notes, newNote];
 
     expect(noteReducer({
@@ -81,14 +96,38 @@ describe('login reducer', () => {
   })
 
   it('should handle UPDATE_NOTE', () => {
-    let notes = [ {'phrase': 'hola', 'definition': 'hi', 'language' : 'es', 'url': '/1'},
-                  {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es', 'url': '/2'},
-                  {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es', 'url': '/3' }];
-    let newNote = {'phrase': 'hola', 'definition': 'hi', 'context': 'hola amigo', 'language' : 'es', 'url': '/1'};
+    let notes = [ { 'phrase': 'hola', 
+                    'definition': 'hi', 
+                    'language' : 'es', 
+                    'url': '/1' },
+                  { 'phrase': 'amigo', 
+                    'definition': 'friend', 
+                    'language' : 'es', 
+                    'url': '/2' },
+                  { 'phrase': 'enemigo', 
+                    'definition': 'enemy', 
+                    'language' : 'es', 
+                    'url': '/3' }];
+    let newNote = { 'phrase': 'hola', 
+                    'definition': 'hi', 
+                    'context': 'hola amigo', 
+                    'language' : 'es', 
+                    'url': '/1' };
 
-    let newNotes = [  {'phrase': 'hola', 'definition': 'hi', 'context': 'hola amigo', 'language' : 'es', 'url': '/1', 'update': true},
-                      {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es', 'url': '/2'},
-                      {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es', 'url': '/3' } ];
+    let newNotes = [  { 'phrase': 'hola', 
+                        'definition': 'hi', 
+                        'context': 'hola amigo', 
+                        'language' : 'es', 
+                        'url': '/1', 
+                        'update': true },
+                      { 'phrase': 'amigo', 
+                        'definition': 'friend', 
+                        'language' : 'es', 
+                        'url': '/2' },
+                      { 'phrase': 'enemigo', 
+                        'definition': 'enemy', 
+                        'language' : 'es', 
+                        'url': '/3' }];
 
     expect(noteReducer({
       notes: notes
@@ -128,14 +167,33 @@ describe('login reducer', () => {
 
   it('should handle DELETE_NOTE', () => {
 
-    let notes = [ {'phrase': 'hola', 'definition': 'hi', 'language' : 'es', 'url': '/1'},
-                  {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es', 'url': '/2'},
-                  {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es', 'url': '/3' }];
+    let notes = [{ 'phrase': 'hola', 
+                   'definition': 'hi', 
+                   'language' : 'es', 
+                   'url': '/1' },
+                 { 'phrase': 'amigo', 
+                   'definition': 'friend', 
+                   'language' : 'es', 
+                   'url': '/2' },
+                 { 'phrase': 'enemigo', 
+                   'definition': 'enemy', 
+                   'language' : 'es', 
+                   'url': '/3' }];
 
-    let deleteNote = {'phrase': 'hola', 'definition': 'hi', 'context': 'hola amigo', 'language' : 'es', 'url': '/1'};
+    let deleteNote = { 'phrase': 'hola', 
+                       'definition': 'hi', 
+                       'context': 'hola amigo', 
+                       'language' : 'es', 
+                       'url': '/1' };
 
-    let newNotes = [  {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es', 'url': '/2'},
-                      {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es', 'url': '/3' } ];
+    let newNotes = [{ 'phrase': 'amigo', 
+                      'definition': 'friend', 
+                      'language' : 'es', 
+                      'url': '/2' },
+                    { 'phrase': 'enemigo', 
+                    'definition': 'enemy', 
+                    'language' : 'es', 
+                    'url': '/3' }];
 
     expect(noteReducer({
       notes: notes
@@ -165,14 +223,39 @@ describe('login reducer', () => {
   })
 
   it('should handle CANCEL_UPDATE', () => {
-    let notes = [ {'phrase': 'hola', 'definition': 'hi', 'language' : 'es', 'url': '/1', 'update': true},
-                  {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es', 'url': '/2'},
-                  {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es', 'url': '/3' }];
-    let newNote = {'phrase': 'hola', 'definition': 'hi', 'context': 'hola amigo', 'language' : 'es', 'url': '/1'};
+    let notes = [ { 'phrase': 'hola', 
+                    'definition': 'hi', 
+                    'language' : 'es', 
+                    'url': '/1', 
+                    'update': true},
+                  { 'phrase': 'amigo', 
+                    'definition': 'friend', 
+                    'language' : 'es', 
+                    'url': '/2' },
+                  { 'phrase': 'enemigo', 
+                    'definition': 'enemy', 
+                    'language' : 'es', 
+                    'url': '/3' }];
+    let newNote = { 'phrase': 'hola', 
+                    'definition': 'hi', 
+                    'context': 'hola amigo', 
+                    'language' : 'es', 
+                    'url': '/1' };
 
-    let newNotes = [  {'phrase': 'hola', 'definition': 'hi', 'context': 'hola amigo', 'language' : 'es', 'url': '/1', 'update': false},
-                      {'phrase': 'amigo', 'definition': 'friend', 'language' : 'es', 'url': '/2'},
-                      {'phrase': 'enemigo', 'definition': 'enemy', 'language' : 'es', 'url': '/3' } ];
+    let newNotes = [{ 'phrase': 'hola', 
+                      'definition': 'hi', 
+                      'context': 'hola amigo', 
+                      'language' : 'es', 
+                      'url': '/1', 
+                      'update': false },
+                    { 'phrase': 'amigo', 
+                      'definition': 'friend', 
+                      'language' : 'es', 
+                      'url': '/2' },
+                    { 'phrase': 'enemigo', 
+                      'definition': 'enemy', 
+                      'language' : 'es', 
+                      'url': '/3' }];
 
     expect(noteReducer({
       notes: notes

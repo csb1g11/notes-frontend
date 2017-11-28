@@ -1,5 +1,6 @@
-import notificationReducer from '../client/redux/reducers/notificationReducer'
-import * as types from '../client/redux/actions/types'
+import notificationReducer from '../client/redux/reducers/notificationReducer';
+import * as types from '../client/redux/actions/types';
+
 jest.mock('config');
 
 describe('login reducer', () => {

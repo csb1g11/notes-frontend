@@ -1,5 +1,3 @@
-jest.mock('config');
-
 import react from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -9,11 +7,12 @@ import moxios from 'moxios';
 import expect from 'expect';
 import jwtDecode from 'jwt-decode';
 import localStorage from 'mock-local-storage';
-
-const middlewares = [thunk]	
-const mockStore = configureMockStore(middlewares)
-
 import * as loginActions from '../client/redux/actions/loginActions';
+
+jest.mock('config');
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 
 describe('login action tests', () => {
@@ -30,9 +29,11 @@ describe('login action tests', () => {
         response: { notes: [] },
       });
     });
+
     const expectedActions = [
       { type: types.GET_TOKEN_REQUEST, user }
     ];
+
     const store = mockStore({ auth: {} });
     return store.dispatch(loginActions.getToken(user))
     .then(() => {
@@ -50,10 +51,12 @@ describe('login action tests', () => {
         response: { err: {} },
       });
     });
+
     const expectedActions = [
     	{ type: types.GET_TOKEN_REQUEST, user },
     	{ type: types.REJECTED_ACTION, text: 'Please login again'}
     ];
+
     const store = mockStore({ auth: {} });
     return store.dispatch(loginActions.getToken(user))
     .then(() => {
@@ -79,11 +82,13 @@ describe('login action tests', () => {
         response: { token: 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNSwidXNlcm5hbWUiOiJoaTMwIiwiZXhwIjoxNTExODc4MzYzLCJlbWFpbCI6IiIsIm9yaWdfaWF0IjoxNTExNzA1NTYzfQ.RyHW10Qk3b_7E1xxu9OF8yB6jWqvQp-SXojiXt4dl24' },
       });
     });
+
     const expectedActions = [
       { type: types.LOGIN_REQUEST, user },
       { type: types.SET_CURRENT_USER, user: user_decoded },
       { type: types.SUCCESSFUL_ACTION, text: 'Welcome ' + user.username }
     ];
+
     const store = mockStore({ auth: {} });
     return store.dispatch(loginActions.login(user))
     .then(() => {
@@ -103,10 +108,12 @@ describe('login action tests', () => {
         response: { token: 'JWT fbkhkbfkd' },
       });
     });
+
     const expectedActions = [
       { type: types.LOGIN_REQUEST, user },
       { type: types.REJECTED_ACTION, text: 'Please try again' }
     ];
+
     const store = mockStore({ auth: {} });
     return store.dispatch(loginActions.login(user))
     .then(() => {
@@ -126,10 +133,12 @@ describe('login action tests', () => {
         response: { err: {} },
       });
     });
+
     const expectedActions = [
       { type: types.LOGIN_REQUEST, user },
       { type: types.REJECTED_ACTION, text: "Please try again"}
     ];
+
     const store = mockStore({ auth: {} });
     return store.dispatch(loginActions.login(user))
     .then(() => {
@@ -149,10 +158,12 @@ describe('login action tests', () => {
         response: { err: {} },
       });
     });
+
     const expectedActions = [
       { type: types.LOGIN_REQUEST, user },
       { type: types.REJECTED_ACTION, text: "Those aren't the details we recognise, please try again!"}
     ];
+    
     const store = mockStore({ auth: {} });
     return store.dispatch(loginActions.login(user))
     .then(() => {

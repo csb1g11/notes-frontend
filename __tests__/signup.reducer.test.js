@@ -1,5 +1,6 @@
-import signupReducer from '../client/redux/reducers/signupReducer'
-import { CREATE_USER_REQUEST, SIGNUP_REQUEST } from '../client/redux/actions/types'
+import signupReducer from '../client/redux/reducers/signupReducer';
+import { CREATE_USER_REQUEST, SIGNUP_REQUEST } from '../client/redux/actions/types';
+
 jest.mock('config');
 
 describe('signup reducer', () => {
@@ -15,7 +16,8 @@ describe('signup reducer', () => {
   })
 
   it('should handle CREATE_USER_REQUEST', () => {
-    let user = { 'username': 'user1', 'password': 'pass1'};
+    let user = { 'username': 'user1', 
+                'password': 'pass1' };
     let emptyUser = {};
 
     expect(
@@ -47,7 +49,8 @@ describe('signup reducer', () => {
   })
 
   it('should handle SIGNUP_REQUEST', () => {
-    let user = { 'username': 'user1', 'password': 'pass1'};
+    let user = { 'username': 'user1', 
+                 'password': 'pass1' };
     let emptyUser = {};
 
     expect(
