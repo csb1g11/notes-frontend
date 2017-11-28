@@ -1,17 +1,17 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { Router, browserHistory } from 'react-router';
-import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './redux/reducers/index';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import jwtDecode from 'jwt-decode';
-import { setCurrentUser } from './redux/reducers/loginReducer';
 import axios from 'axios';
+
+import { render } from 'react-dom';
+import { Router, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { setCurrentUser } from './redux/reducers/loginReducer';
+
 import "./styles/mainSheet/site.scss";
-
-
 import routes from './redux/routes';
 
 const store = createStore(

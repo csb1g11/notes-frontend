@@ -1,12 +1,12 @@
 import axios from "axios";
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
-import { SUCCESSFUL_ACTION, REJECTED_ACTION, INFO_ACTION, WARNING, SUCCESS } from '../actions/types';
+import { SUCCESSFUL_ACTION, REJECTED_ACTION, INFO_ACTION, 
+  WARNING, SUCCESS } from '../actions/types';
 
 let initial = {
   text: '',
   type: ''
 };
-
 
 const notificationReducer = (state = initial, action) => {
   switch (action.type) {

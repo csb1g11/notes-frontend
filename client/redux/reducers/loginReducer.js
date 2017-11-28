@@ -1,6 +1,6 @@
 import axios from "axios";
-import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import isEmpty from 'lodash/isEmpty';
+import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import { SET_CURRENT_USER } from '../actions/types';
 
 export const setCurrentUser = (user) => ({type: SET_CURRENT_USER, user});
@@ -12,7 +12,6 @@ let initial = {
   auth: {},
   text: ''
 };
-
 
 const loginReducer = (state = initial, action) => {
   switch (action.type) {

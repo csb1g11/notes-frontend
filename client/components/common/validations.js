@@ -1,5 +1,6 @@
 import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
+
 const requiredText = 'This field is required';
 
 export function validateLoginInput({ username='', password=''}) {

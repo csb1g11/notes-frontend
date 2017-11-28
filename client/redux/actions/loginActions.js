@@ -1,9 +1,10 @@
 import axios from "axios";
-import setAuthorizationToken from '../../utils/setAuthorizationToken';
-import jwtDecode from 'jwt-decode';
-import { SET_CURRENT_USER, SUCCESSFUL_ACTION, GET_TOKEN_REQUEST, LOGIN_REQUEST } from './types';
-import { notifySuccess, notifyRejected } from './notificationActions';
 import config from 'config';
+import jwtDecode from 'jwt-decode';
+import setAuthorizationToken from '../../utils/setAuthorizationToken';
+import { notifySuccess, notifyRejected } from './notificationActions';
+import { SET_CURRENT_USER, SUCCESSFUL_ACTION, GET_TOKEN_REQUEST, 
+  LOGIN_REQUEST } from './types';
 
 export function setCurrentUser(user) {
   return {
@@ -34,6 +35,7 @@ export const logout = () => {
     try {
       localStorage.removeItem('jwtToken');
       setAuthorizationToken(false);
+
       dispatch(notifySuccess("Logged out"));
       dispatch(setCurrentUser({}));
     } catch (error) {
@@ -54,8 +56,9 @@ export const login = (credentials) => {
 
       if (token !== undefined) {
         decodedToken = jwtDecode(token);
-        dispatch(setCurrentUser(decodedToken));
         localStorage.setItem('jwtToken', token);
+
+        dispatch(setCurrentUser(decodedToken));
         dispatch(notifySuccess("Welcome " + credentials.username));
       } else {
         dispatch(notifyRejected("Invalid credentials provided / user doesn't exist"));
@@ -67,7 +70,10 @@ export const login = (credentials) => {
       return res;
     })
     .catch(error => {
-    	if (error.response && error.response.status && error.response.status === 401) {
+    	if (  error.response 
+            && error.response.status 
+            && error.response.status === 401) {
+        
     			dispatch(notifyRejected("Those aren't the details we recognise, please try again!"));
     	} else {
     	  dispatch(notifyRejected("Please try again"));

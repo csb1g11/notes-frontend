@@ -21,10 +21,12 @@ const noteReducer = (state = initial, action) => {
         };
       }
       case FETCH_NOTES_REJECTED: {
-        return { ...state, fetching: false, error: action.payload}
+        return { ...state, 
+                 fetching: false, 
+                 error: action.payload}
       }
       case FETCH_NOTES_FULFILLED: {
-        const newNotes = action.payload
+        const newNotes = action.payload;
 
         const newState = {
           ...state,
@@ -42,10 +44,11 @@ const noteReducer = (state = initial, action) => {
         }
       }
       case UPDATE_NOTE: {
-        const { url } = action.payload
-        const newNotes = [...state.notes]
-        const noteToUpdate = newNotes.findIndex(note => note.url === url)
-        newNotes[noteToUpdate] = { ...action.payload, update: true};
+        const { url } = action.payload;
+        const newNotes = [...state.notes];
+        const noteToUpdate = newNotes.findIndex(note => note.url === url);
+        newNotes[noteToUpdate] = { ...action.payload, 
+                                   update: true };
 
         return {
           ...state,
@@ -75,7 +78,8 @@ const noteReducer = (state = initial, action) => {
         const { url } = action.payload
         const newNotes = [...state.notes]
         const noteToUpdate = newNotes.findIndex(note => note.url === url)
-        newNotes[noteToUpdate] = { ...action.payload, update: false};
+        newNotes[noteToUpdate] = { ...action.payload, 
+                                   update: false};
 
         return {
           ...state,

@@ -9,7 +9,6 @@ import requireAuth from '../utils/requireAuth';
 import NewNotePage from '../components/notes/newNotePage';
 import NoteList from '../components/notes/noteList';
 
-
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Welcome} />

@@ -51,3 +51,6 @@ yarn start
 
 #### Maintenance
 - Requires component tests: currently the tests cover the action creators, actions and reducers. Enzyme would be the reccommended tool for testing components.
+
+### Thanks
+I followed a [tutorial](https://www.youtube.com/channel/UCsvMopMspsGw89AWim0FMfw) to help with the authentication and login of the application.

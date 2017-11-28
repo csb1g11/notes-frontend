@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { fetchNotes, deleteNote, updateNote, saveUpdatedNote, cancelUpdate } from '../../redux/actions/noteActions';
+import { fetchNotes, deleteNote, updateNote, 
+  saveUpdatedNote, cancelUpdate } from '../../redux/actions/noteActions';
 import { InputFieldGroup, SelectFieldGroup } from '../common/fieldGroups';
 import SearchBar from '../searchBar';
 import NoteForm from './noteForm';
 import { langOptions, langMap } from '../common/languages';
-import { validateNoteInput } from '../common/validations'
+import { validateNoteInput } from '../common/validations';
 
 class NoteList extends Component {
   constructor(props) {
@@ -30,6 +31,8 @@ class NoteList extends Component {
     this.onCancel = this.onCancel.bind(this);
     this.onLanguageChange = this.onLanguageChange.bind(this);
     this.toggleAddPanel = this.toggleAddPanel.bind(this);
+    this.filterByLanguage = this.filterByLanguage.bind(this);
+    this.filterBySearchTerm = this.filterBySearchTerm.bind(this);
   }
 
   onUpdate(note) {
@@ -69,11 +72,18 @@ class NoteList extends Component {
     if (this.isValid()){
       this.props.dispatch(saveUpdatedNote(this.state, this.props.user)).then(
         (response) => {
-          this.setState({ updateInProgress: false, errors: {}, isLoading: false, phrase: '', definition: '', context: '', language: '', website: '' })
+          this.setState({ updateInProgress: false, 
+                          errors: {}, 
+                          isLoading: 
+                          false, phrase: '', 
+                          definition: '', 
+                          context: '', 
+                          language: '', 
+                          website: '' })
         },
         (error) => {
-          console.log(error);
-          this.setState({ errors: error, isLoading: false })
+          this.setState({ errors: error, 
+                          isLoading: false })
         }
       );
     }
@@ -91,6 +101,25 @@ class NoteList extends Component {
     $('#addPanel').toggle();
   }
 
+  filterByLanguage(selectedLanguage, filteredNotes, notes) {
+     if (selectedLanguage != '' && selectedLanguage != 'All') {
+        filteredNotes = notes.filter((val) => val.language == selectedLanguage);
+      } else {
+        filteredNotes = notes;
+      }
+      return filteredNotes;
+  }
+
+  filterBySearchTerm(searchTerm, filteredNotes) {
+    let regex = new RegExp(searchTerm, "i");
+    if (searchTerm !== '') {
+      filteredNotes = filteredNotes.filter((val) => 
+        (regex.test(val.phrase) || regex.test(val.definition))
+      );
+    }
+    return filteredNotes;
+  }
+
   render() {
     const { notes, searchTerm, user } = this.props;
     const { errors } = this.state;
@@ -99,19 +128,11 @@ class NoteList extends Component {
     let selectedLanguage = this.state.selectedLanguage || '';
     let mappedNotes = "Add some notes to see them here!";
     let availableLanguages = [];
-    let regex = new RegExp(searchTerm, "i")
 
     if (notes !== undefined) {
 
-      if (selectedLanguage != '' && selectedLanguage != 'All') {
-        filteredNotes = notes.filter((val) => val.language == selectedLanguage);
-      } else {
-        filteredNotes = notes;
-      }
-
-      if (searchTerm !== '') {
-        filteredNotes = filteredNotes.filter((val) => regex.test(val.phrase));
-      }
+      filteredNotes = this.filterByLanguage(selectedLanguage, filteredNotes, notes);
+      filteredNotes = this.filterBySearchTerm(searchTerm, filteredNotes);
 
       let allMappedLanguages = langOptions.map((lang) =>
         <option key={lang.code} value={lang.code}>{lang.name}</option>
@@ -124,9 +145,27 @@ class NoteList extends Component {
           <div className="panel panel-default">
               <div className="panel-heading">
                    <h3 className="panel-title pull-left">{note.phrase}</h3>
-                    <button id="deleteButton" type="button" onClick={() => this.props.dispatch(deleteNote(note, user))} className="btn pull-right btn-danger">Delete</button>
-                    { !note.update && !this.state.updateInProgress && <button type="button" id="updateButton" onClick={() => this.onUpdate(note)} className="btn pull-right btn-info">Update</button>}
-                    { note.update && <button type="button" onClick={() => this.onCancel(note)} className="btn btn-default pull-right">Cancel</button>}
+                    <button id="deleteButton" 
+                      type="button" onClick={() => this.props.dispatch(deleteNote(note, user))} 
+                      className="btn pull-right btn-danger">
+                        Delete
+                    </button>
+                    { !note.update 
+                      && !this.state.updateInProgress 
+                      && <button 
+                            type="button" 
+                            id="updateButton" 
+                            onClick={() => this.onUpdate(note)} 
+                            className="btn pull-right btn-info">
+                              Update
+                         </button>}
+                    { note.update 
+                      && <button 
+                            type="button" 
+                            onClick={() => this.onCancel(note)} 
+                            className="btn btn-default pull-right">
+                              Cancel
+                         </button>}
                   <div className="clearfix"></div>
               </div>
               <div className="panel-body">
@@ -134,14 +173,22 @@ class NoteList extends Component {
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col">
-                      <b>Definition</b> <div>{note.definition}</div>
+                      <b>Definition</b> 
+                        <div>
+                          {note.definition}
+                        </div>
                     </div>
                     <div className="col">
                       <b>{ note.website && <a href={note.website}>
-                    <span className="glyphicon glyphicon-link"></span></a>} Context</b> <div>{note.context}</div>
+                    <span className="glyphicon glyphicon-link"></span></a> } Context</b> 
+                      <div>
+                        {note.context}
+                      </div>
                     </div>
                   </div>
-                  <p className="pull-right" id="language">   Language: {langMap[note.language]}</p>
+                  <p className="pull-right" id="language">
+                     Language: {langMap[note.language]}
+                  </p>
                 </div>
 
                 }
@@ -184,7 +231,10 @@ class NoteList extends Component {
                       onChange={this.onChange}
                     />
 
-                    <button type="submit" className="btn btn-success">Update</button>
+                    <button type="submit" 
+                            className="btn btn-success">
+                              Update
+                    </button>
                   </form>
                 </div>
                 }
@@ -206,14 +256,16 @@ class NoteList extends Component {
                     <SearchBar />
                   </div>
                   <div className="col-sm-2">
-                    <button className="btn btn-success addButton" onClick={this.toggleAddPanel}>
+                    <button className="btn btn-success addButton" 
+                            onClick={this.toggleAddPanel}>
                       <span className="glyphicon glyphicon-plus"></span>
                     </button>
                   </div>
                   <div className="col-sm-4">
                     <div className="pull-right">
                       <label>Language: </label>
-                      <select value={this.state.selectedLanguage} onChange={this.onLanguageChange}>
+                      <select value={this.state.selectedLanguage} 
+                              onChange={this.onLanguageChange}>
                         <option key="all" value="All">All</option>
                         {mappedLanguages}
                       </select>

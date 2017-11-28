@@ -7,16 +7,19 @@ import config from 'config';
 
 export function createNewUser(credentials) {
   return dispatch => {
-    dispatch({type: CREATE_USER_REQUEST, user : credentials });
+    dispatch({ type: CREATE_USER_REQUEST, 
+               user : credentials });
 
     return axios({
         method: 'post',
         url: config.apiRoot + '/api-auth/',
         data: JSON.stringify(credentials)
       }).then(res => {
+
         dispatch(notifySuccess("Added user " + credentials.username));
         return res.data; 
       }).catch(error => {
+
         dispatch(notifyRejected("Please try again"));
         return error;
       });
@@ -30,6 +33,7 @@ export const userSignupRequest = (credentials) => {
     return axios
       .post(config.apiRoot +'/users/', credentials)
       .then(response => {
+
         dispatch(notifySuccess("All signed up!"))
         return response.data;
       }).catch((error) => {

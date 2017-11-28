@@ -47,7 +47,13 @@ class NoteForm extends React.Component {
     if (this.isValid()){
       this.props.addNote(this.state).then(
         (response) => {
-          this.setState({ errors: {}, isLoading: false, phrase: '', definition: '', context: '', language: '', website: '' })
+          this.setState({ errors: {}, 
+                          isLoading: false, 
+                          phrase: '', 
+                          definition: '', 
+                          context: '', 
+                          language: '', 
+                          website: '' })
         },
         (error) => {
           this.setState({ errors: error, isLoading: false })

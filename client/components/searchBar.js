@@ -16,7 +16,8 @@ class SearchBar extends Component {
         <input
           className="form-control"
           placeholder = "Search for a phrase"
-          onChange={(e) => this.props.dispatch(searchNotes(e.target.value))}
+          onChange={(e) => 
+            this.props.dispatch(searchNotes(e.target.value))}
           value={value} />
     );
   }

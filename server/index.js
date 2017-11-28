@@ -5,7 +5,6 @@ const volleyball = require('volleyball');
 
 app.use(volleyball);
 
-
 app.use(express.static(path.resolve(__dirname, '..', 'client')));
 app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
 
