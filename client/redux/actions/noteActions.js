@@ -40,13 +40,13 @@ export function addNote({ phrase, context, definition, language, website }, user
       data: JSON.stringify({ phrase, context, definition, language, website }) })
     .then(res => {
 
-      console.log("asking to add note", res);
       dispatch(notifySuccess("All saved - safe & sound!"));
       dispatch(fetchNotes(user));
       return res;
     })
     .catch(error => {
-      console.log("error", error);
+      
+      console.error(error);
       dispatch(notifyRejected("Oh no! We haven't kept that safe just yet, please try again."));
       return error;
     });

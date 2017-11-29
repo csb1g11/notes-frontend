@@ -28,12 +28,6 @@ class NoteForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  validUrl(str) {
-    var pattern = new RegExp('www.?.+','i');
-
-    return (pattern.test(str))
-  }
-
   isValid() {
     const { errors, isValid } = validateNoteInput(this.state);
 
@@ -44,13 +38,10 @@ class NoteForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
-    console.log("submit state", this.state);
-
     if (this.isValid()){
       this.setState({ errors: {}, isLoading: true });
       this.props.addNote(this.state).then(
         (response) => {
-          console.log("response", response);
           this.setState({ errors: {}, 
                           isLoading: false, 
                           phrase: '', 
@@ -60,7 +51,8 @@ class NoteForm extends React.Component {
                           website: '' })
         },
         (error) => {
-          this.setState({ errors: error, isLoading: false })
+          this.setState({ errors: error, 
+                          isLoading: false })
         }
       );
     }

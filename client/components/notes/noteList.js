@@ -75,8 +75,8 @@ class NoteList extends Component {
         (response) => {
           this.setState({ updateInProgress: false, 
                           errors: {}, 
-                          isLoading: 
-                          false, phrase: '', 
+                          isLoading: false, 
+                          phrase: '', 
                           definition: '', 
                           context: '', 
                           language: '', 
