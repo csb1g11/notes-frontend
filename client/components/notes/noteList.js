@@ -45,7 +45,8 @@ class NoteList extends Component {
       language: note.language,
       url: note.url,
       updateInProgress: true,
-      errors: {}
+      errors: {},
+      addPanel: false
     });
   }
 
@@ -98,6 +99,8 @@ class NoteList extends Component {
   }
 
   toggleAddPanel() {
+    let currentPanel = this.state.addPanel;
+    this.setState({ 'addPanel' : !currentPanel });
     $('#addPanel').toggle();
   }
 
@@ -122,7 +125,7 @@ class NoteList extends Component {
 
   render() {
     const { notes, searchTerm, user } = this.props;
-    const { errors } = this.state;
+    const { errors, addPanel } = this.state;
 
     let filteredNotes = [];
     let selectedLanguage = this.state.selectedLanguage || '';
@@ -258,7 +261,8 @@ class NoteList extends Component {
                   <div className="col-sm-2">
                     <button className="btn btn-success addButton" 
                             onClick={this.toggleAddPanel}>
-                      <span className="glyphicon glyphicon-plus"></span>
+                      { !addPanel && <span className="glyphicon glyphicon-plus"></span>}
+                      { addPanel && <span className="glyphicon glyphicon-minus"></span>}
                     </button>
                   </div>
                   <div className="col-sm-4">

@@ -13,7 +13,7 @@ class NoteForm extends React.Component {
       definition: '',
       context: '',
       website: '',
-      language: '',
+      language: 'af',
       errors: {},
       isLoading: false,
       update: false
@@ -21,7 +21,7 @@ class NoteForm extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.validUrl = this.validUrl.bind(this);
+    this.isValid = this.isValid.bind(this);
   }
 
   onChange(e) {
@@ -44,15 +44,19 @@ class NoteForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
 
+    console.log("submit state", this.state);
+
     if (this.isValid()){
+      this.setState({ errors: {}, isLoading: true });
       this.props.addNote(this.state).then(
         (response) => {
+          console.log("response", response);
           this.setState({ errors: {}, 
                           isLoading: false, 
                           phrase: '', 
                           definition: '', 
                           context: '', 
-                          language: '', 
+                          language: 'af', 
                           website: '' })
         },
         (error) => {

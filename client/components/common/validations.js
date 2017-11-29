@@ -32,9 +32,11 @@ export function validateSignupInput({ username='', password='', passwordConfirma
   }
 }
 
-export function validateNoteInput({ phrase='', definition='', language='', context='' }) {
+export function validateNoteInput({ phrase='', definition='', language='', context='', website='' }) {
   let errors = {};
   let charLimit = 'This field cannot be more than 200 characters';
+  var pattern = new RegExp('www.?.+','i');
+
 
   if (Validator.isEmpty(phrase)) { errors.phrase = requiredText; }
   if (Validator.isEmpty(definition)) { errors.definition = requiredText; }
@@ -42,6 +44,9 @@ export function validateNoteInput({ phrase='', definition='', language='', conte
 
   if (phrase.length > 200) { errors.phrase = charLimit; }
   if (definition.length > 200) { errors.definition = charLimit; }
+  if (website !== '' && !pattern.test(website)) { errors.website = "Please enter a valid url, beginning with http:// or https://"; }
+
+  console.log("errors from validation", errors);
 
   return {
     errors,
