@@ -47,6 +47,7 @@ yarn start
 
 #### Features
 - Expand the search & filter functionality to allow tagging
+- Pull the users currently tagged languages to the top of the language dropdown list
 - Move the filter logic to the backend: this would involve making use of a parameter on the existing notes endpoint specifying the language, and creating another endpoint to list the users available languages for the filter functionality.
 - Flashcards: now that the structure of a note has been displayed, it would be quite simple to add flashcards to test the words you've added. Another extension would be getting the user to highlight the phrase which correlates to their definition from the context they have provided.
 - NLP: tokenizing the context and phrase and providing a tag for what type of word is being entered would be useful, i.e. if there is a verb in the past participle.
@@ -56,6 +57,7 @@ yarn start
 - Requires component tests: currently the tests cover the action creators, actions and reducers. Enzyme would be the reccommended tool for testing components.
 - Requires testing in Internet Explorer and older browser versions.
 - Server the application over HTTPS.
+- Use eslint to check formatting of code
 
 ### Thanks
 I followed a [tutorial](https://www.youtube.com/channel/UCsvMopMspsGw89AWim0FMfw) to help with the authentication and login of the application.
