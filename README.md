@@ -20,6 +20,8 @@ An application to help you remember words you read in a language you are learnin
 - babel v6.5.2
 - yarn v1.3.2
 
+This application has been tested in Chrome v62, Firefox v56.0 and Safari v11.
+
 [Demo](http://52.211.204.132:8080/)
 
 ## Installation
@@ -52,6 +54,7 @@ yarn start
 
 #### Maintenance
 - Requires component tests: currently the tests cover the action creators, actions and reducers. Enzyme would be the reccommended tool for testing components.
+- Requires testing in Internet Explorer and older browser versions.
 
 ### Thanks
 I followed a [tutorial](https://www.youtube.com/channel/UCsvMopMspsGw89AWim0FMfw) to help with the authentication and login of the application.
