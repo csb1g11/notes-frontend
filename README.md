@@ -29,8 +29,8 @@ This application has been tested in Chrome v62, Firefox v56.0 and Safari v11.
 1) Install nvm & nodejs. It is a good idea to install [nvm](https://github.com/creationix/nvm/blob/master/README.md) to manage node version but it isn't mandatory. v8.9.0 of [nodejs](https://nodejs.org/en/download/) has been used to build this project. 
 2) Install [yarn](https://www.npmjs.com/package/yarn/tutorial).
 3) Make sure you are in the root directory, and run `yarn`. This will install of the dependencies.
-4) In the main folder, there is a config.json file which contains the URL of the backend database for this project - head over to the [notes-api](https://github.com/csb1g11/notes-api) repository to download and run this. You will need to change this config to point to where the API is running.
-5) Create a bundled version of the code by running yarn webpack, and then get the node.js server up and running with yarn start.
+4) In the main folder, there is a `config.json` file which contains the URL of the backend database for this project - head over to the [notes-api](https://github.com/csb1g11/notes-api) repository to download and run this. You will need to change this config to point to where the API is running. If you'd like to change the port from 3000, then this can be altered in the server/index.js file. 
+5) Create a bundled version of the code by running `yarn webpack`, and then get the node.js server up and running with `yarn start`.
 
 ```
 yarn webpack
@@ -47,14 +47,15 @@ yarn start
 
 #### Features
 - Expand the search & filter functionality to allow tagging
-- Move the filter logic to the backend: this would involve making user of a parameter on the existing notes endpoint specifying the language, and creating another endpoint to list the users available languages for the filter functionality.
-- Flashcards: now that the structure of a note has been displayed, it would be quite simple to add flashcards for testing your memory. Another extension would be getting the user to highlight the phrase which correlates to their definition from the context they have provided.
-- NLP: tokenizing the context and phrase and providing a tag for what type of word is being entered would be useful, ie if there is a verb in the past participle.
+- Move the filter logic to the backend: this would involve making use of a parameter on the existing notes endpoint specifying the language, and creating another endpoint to list the users available languages for the filter functionality.
+- Flashcards: now that the structure of a note has been displayed, it would be quite simple to add flashcards to test the words you've added. Another extension would be getting the user to highlight the phrase which correlates to their definition from the context they have provided.
+- NLP: tokenizing the context and phrase and providing a tag for what type of word is being entered would be useful, i.e. if there is a verb in the past participle.
 
 
 #### Maintenance
 - Requires component tests: currently the tests cover the action creators, actions and reducers. Enzyme would be the reccommended tool for testing components.
 - Requires testing in Internet Explorer and older browser versions.
+- Server the application over HTTPS.
 
 ### Thanks
 I followed a [tutorial](https://www.youtube.com/channel/UCsvMopMspsGw89AWim0FMfw) to help with the authentication and login of the application.
