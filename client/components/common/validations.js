@@ -42,7 +42,7 @@ export function validateNoteInput({ phrase='', definition='', language='', conte
 
   if (phrase.length > 200) { errors.phrase = charLimit; }
   if (definition.length > 200) { errors.definition = charLimit; }
-  if (website !== '' && !Validator.isURL(website)) { errors.website = "Please enter a valid url, beginning with http:// or https://"; }
+  if (website !== '' && !Validator.isURL(website, { require_protocol: true })) { errors.website = "Please enter a valid url, beginning with http:// or https://"; }
 
   console.log("errors from validation", errors);
 
