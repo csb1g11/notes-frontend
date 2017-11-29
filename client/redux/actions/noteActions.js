@@ -45,8 +45,7 @@ export function addNote({ phrase, context, definition, language, website }, user
       return res;
     })
     .catch(error => {
-      
-      console.error(error);
+
       dispatch(notifyRejected("Oh no! We haven't kept that safe just yet, please try again."));
       return error;
     });
