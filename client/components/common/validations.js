@@ -35,7 +35,7 @@ export function validateSignupInput({ username='', password='', passwordConfirma
 export function validateNoteInput({ phrase='', definition='', language='', context='', website='' }) {
   let errors = {};
   let charLimit = 'This field cannot be more than 200 characters';
-  var pattern = new RegExp('www.?.+','i');
+  var pattern = new RegExp('[http://|https://|www]?.+','i');
 
 
   if (Validator.isEmpty(phrase)) { errors.phrase = requiredText; }

@@ -90,7 +90,6 @@ class NoteForm extends React.Component {
           label="Website Link"
           name="website"
           value={website}
-          type="url"
           onChange={this.onChange}
           error={errors.website}
         />
