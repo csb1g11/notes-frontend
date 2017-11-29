@@ -20,6 +20,7 @@ An application to help you remember words you read in a language you are learnin
 - babel v6.5.2
 - yarn v1.3.2
 
+[Demo](http://52.211.204.132:8080/)
 
 ## Installation
 
