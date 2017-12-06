@@ -60,4 +60,4 @@ yarn start
 - Use eslint to check formatting of code
 
 ### Thanks
-I followed a [tutorial](https://www.youtube.com/channel/UCsvMopMspsGw89AWim0FMfw) to help with the authentication and login of the application.
+I followed a [tutorial](https://www.youtube.com/channel/UCsvMopMspsGw89AWim0FMfw) to help with the authentication and login of the application, and the cosmosjs todo app [tutorial](https://hackernoon.com/how-to-build-a-todo-app-using-react-redux-and-webpack-1aa99dc2f45c) for structure.
